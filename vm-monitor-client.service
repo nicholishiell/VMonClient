@@ -3,7 +3,7 @@ Description=VM Usage Monitoring Service
 After=network.target
 
 [Service]
-WorkingDirectory=/usr/local/lib/vm-usage-monitor
+WorkingDirectory=/usr/local/lib/vm-monitor
 ExecStart=/usr/local/lib/vm_monitor/venv/bin/python /usr/local/lib/vm_monitor/vm_monitor_client.py --config /etc/vm_monitor/config.yaml
 Restart=always
 User=vmmonitor
