@@ -8,8 +8,8 @@ ExecStart=/usr/local/lib/vm_monitor/venv/bin/python /usr/local/lib/vm_monitor/vm
 Restart=always
 User=vmmonitor
 Group=vmmonitor
-StandardOutput=append:/var/log/vm-usage-monitor/api.log
-StandardError=append:/var/log/vm-usage-monitor/api.log
+StandardOutput=append:/var/log/vm_monitor/vm_monitor_api.log
+StandardError=append:/var/log/vm_monitor/vm_monitor_api.log
 
 [Install]
 WantedBy=multi-user.target
