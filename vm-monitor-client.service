@@ -3,11 +3,11 @@ Description=VM Usage Monitoring Service
 After=network.target
 
 [Service]
-ExecStart=/usr/local/lib/vm_monitor/vm_monitor_client.py --config /etc/vm_monitor_client/config.yaml
+WorkingDirectory=/usr/local/lib/vm-usage-monitor
+ExecStart=/usr/local/lib/vm-usage-monitor/venv/bin/python /usr/local/lib/vm-usage-monitor/vm_monitor_client.py --config /etc/vm_monitor_client/config.yaml
 Restart=always
 User=ubuntu
 Group=ubuntu
-WorkingDirectory=/var/log/vm_monitor_client
 StandardOutput=append:/var/log/vm_monitor_client/monitor.log
 StandardError=append:/var/log/vm_monitor_client/monitor.log
 
