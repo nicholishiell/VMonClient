@@ -16,7 +16,7 @@ DATA_DIR="/var/lib/vm_monitor"
 API_SERVICE="vm-monitor-api.service"
 CLIENT_SERVICE="vm-monitor-client.service"
 CONFIG_FILE="config.yaml"
-SCRIPTS=("vm_monitor_api.py" "vm_monitor_client.py" "vm_monitor_db.py")
+SCRIPTS=("vm_monitor/vm_monitor_api.py" "vm_monitor/vm_monitor_client.py" "vm_monitor/vm_monitor_db.py")
 
 # ----------------------------
 # Create directories
@@ -37,6 +37,14 @@ for script in "${SCRIPTS[@]}"; do
         echo "Warning: $script not found!"
     fi
 done
+
+cp requirements.txt "$BIN_DIR/"
+
+echo "Installing Python dependencies..."
+python -m venv "$BIN_DIR/venv"
+source "$BIN_DIR/venv/bin/activate"
+pip install -r "$BIN_DIR/requirements.txt"
+deactivate
 
 # ----------------------------
 # Copy config file
