@@ -50,6 +50,8 @@ class VMMonitorAPI:
     def _register_routes(self):
         """Register Flask routes"""
         self.app.route('/get_usage_data', methods=['GET'])(self.get_usage_data)
+        self.app.route('/check_up', methods=['GET'])(self.get_check_up)
+        self.app.route('/purge', methods=['POST'])(self.post_purge)
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -119,6 +121,39 @@ class VMMonitorAPI:
             return jsonify({'error': f'Invalid date format. Use ISO format (YYYY-MM-DD): {str(e)}'}), 400
         except Exception as e:
             return jsonify({'error': f'Database error: {str(e)}'}), 500
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def get_check_up(self):
+        """Flask route handler for health check"""
+        return jsonify({'status': 'VM Monitor API is running'}), 200
+
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    def post_purge(self):
+        """Flask route handler for purging old data"""
+        days_str = request.args.get('days')
+        if not days_str:
+            return jsonify({'error': 'days parameter is required'}), 400
+
+        try:
+            days = int(days_str)
+            cutoff_date = datetime.datetime.now() - datetime.timedelta(days=days)
+
+            with self.get_db_session() as session:
+                deleted_count = session.query(Sample).filter(Sample.timestamp < cutoff_date).delete(synchronize_session=False)
+                session.commit()
+
+            return jsonify({
+                'status': 'success',
+                'deleted_count': deleted_count
+            })
+
+        except ValueError:
+            return jsonify({'error': 'Invalid days parameter. Must be an integer.'}), 400
+        except Exception as e:
+            return jsonify({'error': f'Database error: {str(e)}'}), 500
+
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

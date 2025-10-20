@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import (Column, Integer, Float, String, ForeignKey, DateTime)
+from sqlalchemy import (Column, Integer, Float, String, ForeignKey, DateTime, text)
 from sqlalchemy.orm import declarative_base, relationship
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -13,8 +13,8 @@ class Sample(Base):
     __tablename__ = "samples"
 
     id = Column(Integer, primary_key=True)
-    timestamp = Column(DateTime, default=datetime.utcnow, index=True)
 
+    timestamp = Column(DateTime, default=datetime.utcnow, index=True)
     cpu_count = Column(Integer)
     gpu_count = Column(Integer)
 
@@ -82,6 +82,9 @@ def create_database_engine(database_file_path):
     # Create SQLite engine
     engine = create_engine(f'sqlite:///{database_file_path}', echo=False)
 
+    with engine.connect() as conn:
+        conn.execute(text("PRAGMA foreign_keys=ON"))
+
     # Create all tables
     Base.metadata.create_all(engine)
 
@@ -97,5 +100,4 @@ def get_session(database_file_path):
         SessionLocal = sessionmaker(bind=engine)
         return SessionLocal()
     except Exception as e:
-        print(f"Error occurred while getting database session: {e}")
-        return None
+        raise e

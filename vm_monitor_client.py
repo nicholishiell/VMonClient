@@ -227,8 +227,6 @@ class VMMonitor():
 
             self.update_peak_usage()
 
-            self.display()
-
             # check if it's time to log the hourly peak
             if datetime.now() >= next_report:
 
@@ -244,19 +242,19 @@ class VMMonitor():
 
 # =================================================================================
 
-def main():
+def main(config_dict : dict):
 
-    monitor = VMMonitor(sample_interval=config[SAMPLE_INTERVAL],
-                        report_interval=config[REPORT_INTERVAL],
-                        db_file_path=config[DB_FILE_PATH])
+    monitor = VMMonitor(sample_interval=config_dict[SAMPLE_INTERVAL],
+                        report_interval=config_dict[REPORT_INTERVAL],
+                        db_file_path=config_dict[DB_FILE_PATH])
     monitor.run()
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-def validate_config(config):
+def validate_config(config_dict : dict) -> bool:
 
     for key in REQUIRED_KEYS:
-        if key not in config:
+        if key not in config_dict:
             print(f"Missing required config key: {key}")
             return False
 
@@ -272,10 +270,11 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Load configuration from YAML file
-    with open(args.config, 'r') as f:
+    config = {}
+    with open(args.config, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
 
     if validate_config(config):
-        main()
+        main(config)
     else:
         print("Invalid configuration. Please check the config file.")
