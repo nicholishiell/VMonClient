@@ -21,7 +21,12 @@ SCRIPTS=("vm_monitor/vm_monitor_api.py" "vm_monitor/vm_monitor_client.py" "vm_mo
 # ----------------------------
 # Create vmmonitor user
 # ----------------------------
-sudo useradd -r -s /usr/sbin/nologin vmmonitor
+if id "vmmonitor" &>/dev/null; then
+    echo "User 'vmmonitor' already exists."
+else
+    echo "Creating user 'vmmonitor'..."
+    sudo useradd -r -s /usr/sbin/nologin vmmonitor
+fi
 
 # ----------------------------
 # Create directories
