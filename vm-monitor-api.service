@@ -1,9 +1,9 @@
 [Unit]
 Description=VM Usage API Service
-After=network.target vm-usage-monitor.service
+After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/vm_monitor_api --config /etc/vm_monitor_client/config.yaml
+ExecStart=/usr/local/lib/vm_monitor_api --config /etc/vm_monitor_client/config.yaml
 Restart=always
 User=ubuntu
 Group=ubuntu
