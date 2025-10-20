@@ -19,8 +19,14 @@ CONFIG_FILE="config.yaml"
 SCRIPTS=("vm_monitor/vm_monitor_api.py" "vm_monitor/vm_monitor_client.py" "vm_monitor/vm_monitor_db.py")
 
 # ----------------------------
+# Create vmmonitor user
+# ----------------------------
+sudo useradd -r -s /usr/sbin/nologin vmmonitor
+
+# ----------------------------
 # Create directories
 # ----------------------------
+
 echo "Creating directories..."
 mkdir -p "$BIN_DIR"
 mkdir -p "$CONFIG_DIR"
@@ -76,10 +82,14 @@ fi
 # Permissions
 # ----------------------------
 echo "Setting permissions..."
-chmod 755 "$BIN_DIR"/*.py
-chmod 644 "$CONFIG_DIR"/*.yaml
-chmod 644 "$SERVICE_DIR"/vm-monitor-*.service
-chown root:root "$CONFIG_DIR"/*.yaml "$SERVICE_DIR"/vm-monitor-*.service
+# chmod 755 "$BIN_DIR"/*.py
+# chmod 644 "$CONFIG_DIR"/*.yaml
+# chmod 644 "$SERVICE_DIR"/vm-monitor-*.service
+# chown root:root "$CONFIG_DIR"/*.yaml "$SERVICE_DIR"/vm-monitor-*.service
+
+sudo chown -R vmmonitor:vmmonitor "$BIN_DIR"
+sudo chown -R vmmonitor:vmmonitor "$DATA_DIR"
+sudo chown -R vmmonitor:vmmonitor "$CONFIG_DIR"
 
 # ----------------------------
 # Reload systemd and enable services
