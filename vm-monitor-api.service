@@ -5,8 +5,8 @@ After=network.target vm-usage-monitor.service
 [Service]
 ExecStart=/usr/local/bin/vm_monitor_api --config /etc/vm_monitor_client/config.yaml
 Restart=always
-User=vmmonitor
-Group=vmmonitor
+User=ubuntu
+Group=ubuntu
 WorkingDirectory=/var/log/vm-usage-monitor
 StandardOutput=append:/var/log/vm-usage-monitor/api.log
 StandardError=append:/var/log/vm-usage-monitor/api.log
