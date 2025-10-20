@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/usr/local/lib/vm-usage-monitor
-ExecStart=/usr/local/lib/vm-monitor/venv/bin/python /usr/local/lib/vm-monitor/vm_monitor_api.py --config /etc/vm_monitor_client/config.yaml
+ExecStart=/usr/local/lib/vm_monitor/venv/bin/python /usr/local/lib/vm_monitor/vm_monitor_api.py --config /etc/vm_monitor/config.yaml
 Restart=always
 User=ubuntu
 Group=ubuntu
