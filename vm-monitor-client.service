@@ -3,7 +3,7 @@ Description=VM Usage Monitoring Service
 After=network.target
 
 [Service]
-ExecStart=/usr/local/lib/vm_monitor_client --config /etc/vm_monitor_client/config.yaml
+ExecStart=/usr/local/lib/vm_monitor/vm_monitor_client --config /etc/vm_monitor_client/config.yaml
 Restart=always
 User=ubuntu
 Group=ubuntu
