@@ -12,6 +12,7 @@ SERVICE_DIR="/etc/systemd/system"
 BIN_DIR="/usr/local/lib/vm_monitor"
 CONFIG_DIR="/etc/vm_monitor"
 DATA_DIR="/var/lib/vm_monitor"
+LOG_DIR="/var/log/vm_monitor"
 
 API_SERVICE="vm-monitor-api.service"
 CLIENT_SERVICE="vm-monitor-client.service"
@@ -36,6 +37,7 @@ echo "Creating directories..."
 mkdir -p "$BIN_DIR"
 mkdir -p "$CONFIG_DIR"
 mkdir -p "$DATA_DIR"
+mkdir -p "$LOG_DIR"
 
 # ----------------------------
 # Copy scripts
