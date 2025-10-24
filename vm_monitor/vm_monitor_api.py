@@ -144,10 +144,9 @@ class VMMonitorAPI:
                 deleted_count = session.query(Sample).filter(Sample.timestamp < cutoff_date).delete(synchronize_session=False)
                 session.commit()
 
-            return jsonify({
-                'status': 'success',
-                'deleted_count': deleted_count
-            })
+            return jsonify({'status': 'success',
+                            'cutoff_date': cutoff_date.isoformat(),
+                            'deleted_count': deleted_count}), 200
 
         except ValueError:
             return jsonify({'error': 'Invalid days parameter. Must be an integer.'}), 400

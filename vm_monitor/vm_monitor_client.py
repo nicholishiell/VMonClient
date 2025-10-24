@@ -46,7 +46,7 @@ class UsageStats:
     disk_used_mb: int = 0
     disk_total_mb: int = 0
 
-    gpu_proc: float = 0.0
+    gpu_proc: int = 0.0
     gpu_mem_used: int = 0
     gpu_mem_total: int = 0
 
@@ -121,13 +121,13 @@ class VMMonitor():
 
     def get_current_gpu_usage(self):
 
-        gpu_proc_usage = 0.0
-        gpu_mem_used = 0.0
-        gpu_mem_total = 0.0
+        gpu_proc_usage = 0
+        gpu_mem_used = 0
+        gpu_mem_total = 0
 
         if self.gpu_type == GPUType.NVIDIA_GPU:
             result = subprocess.run(NVIDIA_SMI_COMMAND, shell=True, capture_output=True, text=True, check=True)
-            gpu_proc_usage = float(result.stdout.split(',')[0].strip())
+            gpu_proc_usage = int(result.stdout.split(',')[0].strip())
             gpu_mem_used = int(result.stdout.split(',')[1].strip())
             gpu_mem_total = int(result.stdout.split(',')[2].strip())
         elif self.gpu_type == GPUType.AMD_GPU:
