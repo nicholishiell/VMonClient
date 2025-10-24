@@ -102,12 +102,20 @@ class VMMonitor():
 
     def check_gpu_type(self):
 
-        if subprocess.run(['nvidia-smi'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True):
+        try:
+            subprocess.run(['nvidia-smi'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True)
             return GPUType.NVIDIA_GPU
-        elif subprocess.run(['rocm-smi'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True):
+
+        except Exception as e:
+            pass
+
+        try:
+            subprocess.run(['rocm-smi'], stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, check=True)
             return GPUType.AMD_GPU
-        else:
-            return GPUType.CPU_ONLY
+        except Exception as e:
+            pass
+
+        return GPUType.CPU_ONLY
 
     # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 

@@ -11,8 +11,8 @@ from vm_monitor_db import get_session, Sample, CPUUsage, MemoryUsage, DiskUsage,
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HOST_IP = 'host_ip'                # Host IP address
-PORT_NUMBER = 'port_number'            # Port number for the API
-DB_FILE_PATH = 'db_file_path'                # directory to store log files
+PORT_NUMBER = 'port_number'        # Port number for the API
+DB_FILE_PATH = 'db_file_path'      # directory to store log files
 
 REQUIRED_KEYS = [HOST_IP, PORT_NUMBER, DB_FILE_PATH]
 
