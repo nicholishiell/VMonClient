@@ -2,4 +2,4 @@ sample_interval: 60 # The interval, in seconds, at which samples are collected.
 report_interval: 3600 # The interval, in seconds, at which reports are generated.
 db_file_path: /var/lib/vm_monitor/vm_monitor.db
 host_ip: 0.0.0.0
-port_number: 8000
+port_number: 8088
