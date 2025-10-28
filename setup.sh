@@ -2,8 +2,8 @@
 # Deploy VM usage monitor services and configuration
 # Run as root or with sudo
 
-set -e  # exit on error
-set -u  # treat unset vars as errors
+# set -e  # exit on error
+# set -u  # treat unset vars as errors
 
 # ----------------------------
 # Configuration
@@ -53,6 +53,9 @@ done
 
 cp requirements.txt "$BIN_DIR/"
 
+# ----------------------------
+# Install Python dependencies
+# ----------------------------
 echo "Installing Python dependencies..."
 python -m venv "$BIN_DIR/venv"
 source "$BIN_DIR/venv/bin/activate"
