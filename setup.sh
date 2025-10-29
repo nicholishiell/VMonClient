@@ -57,9 +57,13 @@ cp requirements.txt "$BIN_DIR/"
 # Install Python dependencies
 # ----------------------------
 echo "Installing Python dependencies..."
-python -m venv "$BIN_DIR/venv"
+sudo apt install -y python3 python3-pip python3-venv -y
+
+python3 -m venv "$BIN_DIR/venv"
 source "$BIN_DIR/venv/bin/activate"
+python3 -m pip install --upgrade pip
 pip install -r "$BIN_DIR/requirements.txt"
+pip install "Werkzeug<2.1"
 deactivate
 
 # ----------------------------

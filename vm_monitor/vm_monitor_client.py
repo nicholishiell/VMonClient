@@ -9,6 +9,7 @@ from logging.handlers import TimedRotatingFileHandler
 from datetime import datetime, timedelta
 import subprocess
 from dataclasses import dataclass
+from typing import List, Optional
 from enum import Enum, auto
 from pprint import pprint
 
@@ -39,7 +40,7 @@ NVIDIA_SMI_COMMAND = f'nvidia-smi --query-gpu={QUERIES} --format=csv,noheader,no
 @dataclass
 class UsageStats:
 
-    cpu: list[float] = None
+    cpu: Optional[List[float]] = None
     mem_used_mb: int = 0
     mem_total_mb: int = 0
 
