@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 import subprocess
 from dataclasses import dataclass
 from enum import Enum, auto
+from typing import List
 from pprint import pprint
 
 from vm_monitor_db import get_session, Sample, CPUUsage, MemoryUsage, DiskUsage, GPUUsage
@@ -39,7 +40,7 @@ NVIDIA_SMI_COMMAND = f'nvidia-smi --query-gpu={QUERIES} --format=csv,noheader,no
 @dataclass
 class UsageStats:
 
-    cpu: list[float] = None
+    cpu: List[float] = None
     mem_used_mb: int = 0
     mem_total_mb: int = 0
 
