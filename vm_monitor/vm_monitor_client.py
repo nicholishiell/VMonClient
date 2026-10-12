@@ -17,8 +17,8 @@ from vm_monitor_db import get_session, Sample, CPUUsage, MemoryUsage, DiskUsage,
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 SAMPLE_INTERVAL = 'sample_interval'      # seconds between samples
-REPORT_INTERVAL = 'report_interval'    # one hour (in seconds)
-DB_FILE_PATH = 'db_file_path'                # directory to store log files
+REPORT_INTERVAL = 'report_interval'      # one hour (in seconds)
+DB_FILE_PATH = 'db_file_path'            # directory to store log files
 
 REQUIRED_KEYS = [SAMPLE_INTERVAL, REPORT_INTERVAL, DB_FILE_PATH]
 
@@ -232,6 +232,11 @@ class VMMonitor():
         next_report = datetime.now() + timedelta(seconds=self.report_interval)
 
         while True:
+
+            # Check GPU type before gathering usage stats
+            # this avoids runtime bug when computer is rebooted during GPU drive updates
+            self.gpu_type = self.check_gpu_type()
+
             self.get_current_usage()
 
             self.update_peak_usage()
